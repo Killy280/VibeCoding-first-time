@@ -6,104 +6,120 @@
   --border: #e4e0d8;
   --accent: #d9622b;
   --accent-dark: #b94f1f;
+  --accent-soft: #fbe9de;
   --good: #3e8e5b;
+  --good-soft: #e3f3e9;
   --bad: #c0392b;
-  --radius: 10px;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(20, 15, 10, 0.04), 0 4px 14px rgba(20, 15, 10, 0.05);
 }
 
-* { box-sizing: border-box; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #171512;
+    --card-bg: #221f1b;
+    --text: #f1ede6;
+    --text-muted: #a49c8f;
+    --border: #38332c;
+    --accent: #ef7a3c;
+    --accent-dark: #ffab77;
+    --accent-soft: #3a281c;
+    --good: #5cbf85;
+    --good-soft: #1c3128;
+    --bad: #e5695a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.35);
+  }
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--bg);
+}
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg);
   color: var(--text);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 header {
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background: var(--bg);
+  padding: max(16px, env(safe-area-inset-top)) 20px 8px;
 }
 
 header h1 {
-  margin: 0 0 12px 0;
-  font-size: 1.3rem;
-}
-
-nav {
-  display: flex;
-  gap: 8px;
-}
-
-.nav-btn {
-  flex: 1;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: var(--text-muted);
-}
-
-.nav-btn.active {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 main {
   max-width: 640px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 8px 16px calc(96px + env(safe-area-inset-bottom));
 }
 
-.view { display: none; }
+.view { display: none; animation: fade-in 0.18s ease; }
 .view.active { display: block; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-bottom: 14px;
 }
 
 .card h3 {
-  margin-top: 0;
+  margin: 0 0 12px 0;
+  font-size: 0.95rem;
 }
 
 .week-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin: 4px 0 16px;
+  gap: 8px;
 }
 
 .week-nav button {
-  background: none;
+  background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 8px 12px;
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   color: var(--text);
+  font-size: 1.1rem;
+  box-shadow: var(--shadow);
 }
 
 .week-nav h2 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   text-align: center;
+  color: var(--text-muted);
 }
 
 .goal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   font-weight: 600;
 }
 
@@ -117,16 +133,19 @@ main {
 }
 
 .goal-edit input {
-  width: 50px;
-  padding: 4px 6px;
+  width: 46px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  text-align: center;
 }
 
 .goal-bar-track {
   background: var(--bg);
   border-radius: 999px;
-  height: 14px;
+  height: 16px;
   overflow: hidden;
   border: 1px solid var(--border);
 }
@@ -134,7 +153,8 @@ main {
 .goal-bar-fill {
   height: 100%;
   background: var(--bad);
-  transition: width 0.3s ease, background 0.3s ease;
+  border-radius: 999px;
+  transition: width 0.35s ease, background 0.35s ease;
 }
 
 .goal-bar-fill.on-track {
@@ -142,9 +162,10 @@ main {
 }
 
 .goal-text {
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 0.9rem;
   color: var(--text-muted);
+  font-weight: 500;
 }
 
 .type-breakdown {
@@ -154,7 +175,7 @@ main {
 }
 
 .type-pill {
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 999px;
   background: var(--bg);
   border: 1px solid var(--border);
@@ -167,7 +188,7 @@ main {
 }
 
 .type-pill.has-sessions {
-  background: #fbe9de;
+  background: var(--accent-soft);
   border-color: var(--accent);
   color: var(--accent-dark);
   font-weight: 600;
@@ -180,11 +201,12 @@ main {
 }
 
 .grade-pill {
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
   background: var(--bg);
   border: 1px solid var(--border);
   font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .empty-msg {
@@ -201,20 +223,22 @@ main {
 
 .session-item {
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 12px;
+  border-radius: 12px;
+  padding: 12px 14px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
+  background: var(--bg);
 }
 
 .session-main {
   flex: 1;
+  min-width: 0;
 }
 
 .session-date {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.85rem;
 }
 
@@ -226,23 +250,26 @@ main {
 
 .session-notes {
   font-size: 0.85rem;
-  margin-top: 4px;
+  margin-top: 6px;
   color: var(--text);
+  word-break: break-word;
 }
 
 .session-actions {
   display: flex;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .session-actions button {
-  background: none;
+  background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 4px 8px;
+  border-radius: 8px;
+  padding: 8px 10px;
   font-size: 0.8rem;
   cursor: pointer;
   color: var(--text-muted);
+  min-height: 36px;
 }
 
 .session-actions button.danger {
@@ -253,25 +280,66 @@ main {
 form {
   display: flex;
   flex-direction: column;
+  gap: 14px;
+}
+
+.field-row {
+  display: flex;
   gap: 12px;
+}
+
+.field-row label {
+  flex: 1;
+  min-width: 0;
 }
 
 label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 0.9rem;
+  gap: 6px;
+  font-size: 0.85rem;
   color: var(--text-muted);
+  font-weight: 500;
 }
 
 input, select, textarea {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
   color: var(--text);
-  background: var(--card-bg);
+  background: var(--bg);
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.type-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.type-option {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  min-height: 40px;
+}
+
+.type-option.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  font-weight: 600;
 }
 
 .form-actions {
@@ -281,21 +349,69 @@ input, select, textarea {
 }
 
 button[type="submit"], .form-actions .secondary {
-  padding: 12px;
-  border-radius: 8px;
+  padding: 14px;
+  border-radius: 10px;
   border: none;
   font-size: 1rem;
   cursor: pointer;
+  min-height: 48px;
 }
 
 button[type="submit"] {
   flex: 1;
   background: var(--accent);
   color: white;
+  font-weight: 600;
 }
 
 .secondary {
-  background: var(--bg);
+  background: var(--card-bg);
   color: var(--text-muted);
   border: 1px solid var(--border) !important;
+}
+
+/* Bottom tab bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.tab-bar .nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 8px 4px;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-radius: 12px;
+  min-height: 52px;
+}
+
+.tab-bar .nav-btn.active {
+  color: var(--accent);
+}
+
+.nav-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.nav-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+@media (min-width: 480px) {
+  main { padding-left: 24px; padding-right: 24px; }
 }

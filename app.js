@@ -210,11 +210,24 @@ const form = document.getElementById("workout-form");
 const submitBtn = document.getElementById("submit-btn");
 const cancelEditBtn = document.getElementById("cancel-edit");
 const formTitle = document.getElementById("form-title");
+const typeSelect = document.getElementById("type-select");
+
+function setTypeSelection(type) {
+  document.getElementById("field-type").value = type;
+  typeSelect.querySelectorAll(".type-option").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.value === type);
+  });
+}
+
+typeSelect.querySelectorAll(".type-option").forEach((btn) => {
+  btn.addEventListener("click", () => setTypeSelection(btn.dataset.value));
+});
 
 function resetForm() {
   form.reset();
   document.getElementById("edit-id").value = "";
   document.getElementById("field-date").value = new Date().toISOString().slice(0, 10);
+  setTypeSelection("bouldering");
   submitBtn.textContent = "Add workout";
   formTitle.textContent = "Log a workout";
   cancelEditBtn.hidden = true;
@@ -225,7 +238,7 @@ function startEdit(id) {
   if (!w) return;
   document.getElementById("edit-id").value = w.id;
   document.getElementById("field-date").value = w.date;
-  document.getElementById("field-type").value = w.type;
+  setTypeSelection(w.type);
   document.getElementById("field-grade").value = w.grade || "";
   document.getElementById("field-duration").value = w.duration || "";
   document.getElementById("field-notes").value = w.notes || "";
