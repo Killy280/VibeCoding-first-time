@@ -1,2 +1,0 @@
-# Vibe Coding First Time
-
