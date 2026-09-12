@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Climbing Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>🧗 Climbing Tracker</h1>
+  <nav>
+    <button class="nav-btn active" data-view="overview">Overview</button>
+    <button class="nav-btn" data-view="log">Log Workout</button>
+    <button class="nav-btn" data-view="history">History</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <section id="view-overview" class="view active">
+    <div class="week-nav">
+      <button id="prev-week">← Prev</button>
+      <h2 id="week-label"></h2>
+      <button id="next-week">Next →</button>
+    </div>
+
+    <div class="card goal-card">
+      <div class="goal-header">
+        <span>Weekly goal</span>
+        <span class="goal-edit">
+          <input type="number" id="goal-input" min="0" step="1">
+          sessions/week
+        </span>
+      </div>
+      <div id="goal-status" class="goal-status">
+        <div class="goal-bar-track"><div id="goal-bar-fill" class="goal-bar-fill"></div></div>
+        <div id="goal-text" class="goal-text"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Climbing type breakdown</h3>
+      <div id="type-breakdown" class="type-breakdown"></div>
+    </div>
+
+    <div class="card">
+      <h3>Grades this week</h3>
+      <div id="grades-list" class="grades-list"></div>
+    </div>
+
+    <div class="card">
+      <h3>Sessions this week</h3>
+      <div id="week-sessions" class="session-list"></div>
+    </div>
+  </section>
+
+  <!-- LOG -->
+  <section id="view-log" class="view">
+    <div class="card">
+      <h3 id="form-title">Log a workout</h3>
+      <form id="workout-form">
+        <input type="hidden" id="edit-id">
+        <label>
+          Date
+          <input type="date" id="field-date" required>
+        </label>
+        <label>
+          Type
+          <select id="field-type" required>
+            <option value="bouldering">Bouldering</option>
+            <option value="sport">Sport</option>
+            <option value="top-rope">Top-rope</option>
+            <option value="training">Training/board</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label>
+          Grade (optional)
+          <input type="text" id="field-grade" placeholder="e.g. V4 or 6b+">
+        </label>
+        <label>
+          Duration in minutes (optional)
+          <input type="number" id="field-duration" min="0" step="1">
+        </label>
+        <label>
+          Notes (optional)
+          <textarea id="field-notes" rows="3" placeholder="How did it feel?"></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="submit" id="submit-btn">Add workout</button>
+          <button type="button" id="cancel-edit" class="secondary" hidden>Cancel edit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="view-history" class="view">
+    <div class="card">
+      <h3>All workouts</h3>
+      <div id="history-list" class="session-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
